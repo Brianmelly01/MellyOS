@@ -13,11 +13,13 @@ const updateSchema = z.object({
 })
 
 // PATCH /api/sites/[id]
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params
+  const id = resolvedParams.id
   const user = await getCurrentUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const site = await prisma.site.findFirst({ where: { id: params.id, userId: user.id } })
+  const site = await prisma.site.findFirst({ where: { id: id, userId: user.id } })
   if (!site) return NextResponse.json({ error: 'Site not found' }, { status: 404 })
 
   try {
@@ -25,7 +27,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     const { regenerateKey, ...updates } = updateSchema.parse(body)
 
     const updated = await prisma.site.update({
-      where: { id: params.id },
+      where: { id: id },
       data: { ...updates, ...(regenerateKey ? { apiKey: generateApiKey() } : {}) },
     })
     return NextResponse.json(updated)
@@ -36,13 +38,15 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 }
 
 // DELETE /api/sites/[id]
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params
+  const id = resolvedParams.id
   const user = await getCurrentUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const site = await prisma.site.findFirst({ where: { id: params.id, userId: user.id } })
+  const site = await prisma.site.findFirst({ where: { id: id, userId: user.id } })
   if (!site) return NextResponse.json({ error: 'Site not found' }, { status: 404 })
 
-  await prisma.site.delete({ where: { id: params.id } })
+  await prisma.site.delete({ where: { id: id } })
   return NextResponse.json({ ok: true })
 }

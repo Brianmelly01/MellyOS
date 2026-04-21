@@ -22,7 +22,7 @@ interface Notification {
   title: string
   body: string | null
   isRead: boolean
-  createdAt: string
+  createdAt: Date
   site: { id: string; name: string }
 }
 

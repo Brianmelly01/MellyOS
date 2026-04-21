@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Globe, Bell, ShoppingBag, Key, Copy, RefreshCw, Trash2, Check, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react'
-import { maskApiKey, formatDate } from '@/lib/utils'
+import { maskApiKey } from '@/lib/api-key'
+import { formatDate } from '@/lib/utils'
 
 interface Site {
   id: string

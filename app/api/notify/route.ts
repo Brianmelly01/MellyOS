@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
         type: data.type,
         title: data.title,
         body: data.body,
-        metadata: data.metadata ?? undefined,
+        metadata: (data.metadata as any) ?? undefined,
         siteId: site.id,
       },
       include: { site: { select: { name: true } } },

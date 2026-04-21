@@ -7,7 +7,7 @@ import type { User } from '@prisma/client'
  * Returns null if not authenticated or session expired.
  */
 export async function getCurrentUser(): Promise<Omit<User, 'passwordHash'> | null> {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const token = cookieStore.get('melly-session')?.value
   if (!token) return null
 
@@ -28,7 +28,7 @@ export async function getCurrentUser(): Promise<Omit<User, 'passwordHash'> | nul
  * Require authentication — throws redirect if not authenticated.
  * Use in Server Components / Route Handlers.
  */
-export async function requireUser() {
+export async function requireUser(): Promise<Omit<User, 'passwordHash'>> {
   const user = await getCurrentUser()
   if (!user) {
     const { redirect } = await import('next/navigation')

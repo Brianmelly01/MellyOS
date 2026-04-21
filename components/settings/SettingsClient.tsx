@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Settings, User, Key, Globe, Loader2, Check, Copy, RefreshCw, Trash2 } from 'lucide-react'
-import { maskApiKey } from '@/lib/utils'
+import { maskApiKey } from '@/lib/api-key'
 import { useToast } from '@/hooks/use-toast'
 
 interface UserData { id: string; name: string; email: string; role: string }
