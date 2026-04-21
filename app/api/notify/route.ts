@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma'
 import { emitToUser } from '@/lib/socket'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const notifySchema = z.object({
   type: z.enum(['ORDER', 'MESSAGE', 'DESIGN_REQUEST', 'CUSTOM']).default('CUSTOM'),
   title: z.string().min(1).max(200),

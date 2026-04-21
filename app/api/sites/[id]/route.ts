@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma'
 import { generateApiKey } from '@/lib/api-key'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const updateSchema = z.object({
   name: z.string().min(1).max(80).optional(),
   url: z.string().url().optional(),

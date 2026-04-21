@@ -4,6 +4,8 @@ import { randomBytes } from 'crypto'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1),

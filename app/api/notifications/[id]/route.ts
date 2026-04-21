@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/session'
 import { prisma } from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 // PATCH /api/notifications/[id] — mark as read/unread
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params

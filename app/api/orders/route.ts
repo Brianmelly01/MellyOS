@@ -5,6 +5,8 @@ import { emitToUser } from '@/lib/socket'
 import { getCurrentUser } from '@/lib/session'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const orderSchema = z.object({
   externalId: z.string().optional(),
   customerName: z.string().min(1).max(200),
