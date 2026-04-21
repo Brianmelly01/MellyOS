@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     const data = orderSchema.parse(body)
 
     const order = await prisma.order.create({
-      data: { ...data, metadata: data.metadata ?? undefined, siteId: site.id },
+      data: { ...data, metadata: (data.metadata as any) ?? undefined, siteId: site.id },
       include: { site: { select: { name: true } } },
     })
 
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
         title: `New order from ${data.customerName}`,
         body: `${data.currency} ${(data.amount / 100).toFixed(2)} — ${data.status}`,
         siteId: site.id,
-        metadata: { orderId: order.id },
+        metadata: { orderId: order.id } as any,
       },
       include: { site: { select: { name: true } } },
     })

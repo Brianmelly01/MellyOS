@@ -34,5 +34,5 @@ export async function requireUser(): Promise<Omit<User, 'passwordHash'>> {
     const { redirect } = await import('next/navigation')
     redirect('/login')
   }
-  return user
+  return user!
 }
