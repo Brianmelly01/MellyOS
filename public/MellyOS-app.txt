@@ -1,0 +1,9 @@
+MellyOS Desktop App
+====================
+Thank you for downloading MellyOS!
+
+The full native app is coming soon for Windows, macOS, Linux, Android & iOS.
+
+In the meantime, access your dashboard at: https://melly-os.vercel.app
+
+Your World. Connected.
