@@ -3,15 +3,12 @@ import type { NextRequest } from 'next/server'
 
 // Routes that require authentication
 const protectedRoutes = ['/dashboard', '/sites', '/notifications', '/settings']
-// Routes accessible only when NOT authenticated
-const authRoutes = ['/login', '/register']
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const sessionToken = request.cookies.get('melly-session')?.value
 
   const isProtected = protectedRoutes.some((route) => pathname.startsWith(route))
-  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route))
 
   // Redirect unauthenticated users away from protected routes
   if (isProtected && !sessionToken) {
@@ -20,10 +17,9 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // Redirect authenticated users away from auth pages
-  if (isAuthRoute && sessionToken) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
-  }
+  // NOTE: We do NOT redirect from /login or /register even if a cookie exists.
+  // The cookie may be stale/expired — only the server-side requireUser() can
+  // validate it against the DB. Forcing a redirect here breaks sign-in after logout.
 
   return NextResponse.next()
 }
