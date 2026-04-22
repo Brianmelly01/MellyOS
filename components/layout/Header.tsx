@@ -46,8 +46,8 @@ export function Header({ user }: HeaderProps) {
 
   async function handleLogout() {
     await fetch('/api/auth/logout', { method: 'POST' })
-    router.push('/login')
-    router.refresh()
+    // Hard redirect to fully clear all Next.js client state
+    window.location.href = '/login'
   }
 
   const typeColors: Record<string, string> = {

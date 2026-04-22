@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Download, X, Smartphone, Monitor, Apple } from 'lucide-react'
 import Image from 'next/image'
@@ -11,7 +10,6 @@ interface DownloadAppModalProps {
 }
 
 export default function DownloadAppModal({ open, onClose }: DownloadAppModalProps) {
-  const router = useRouter()
 
   function handleDownload() {
     // Trigger file download
@@ -22,17 +20,15 @@ export default function DownloadAppModal({ open, onClose }: DownloadAppModalProp
     link.click()
     document.body.removeChild(link)
 
-    // Navigate to dashboard after a short delay
+    // Hard navigate to dashboard after a short delay
     setTimeout(() => {
-      router.push('/dashboard')
-      router.refresh()
+      window.location.href = '/dashboard'
     }, 800)
   }
 
   function handleCancel() {
     onClose()
-    router.push('/dashboard')
-    router.refresh()
+    window.location.href = '/dashboard'
   }
 
   return (
